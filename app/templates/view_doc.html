@@ -1,12 +1,20 @@
-<html>
-  <head>
-    <title>{{doc_name}} - Where's the plag??</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+
+{% block further_head %}
+<script src="/static/js/view_doc.js"></script>
+{% endblock further_head %}
+
+{% block content %}
+<body>
       <h1>{{doc_name}} - Where's the plag??</h1>
       <h1>Hello, there!</h1>
-  </body>
-  <p>
-    {{doc_content}}
-  </p>
-</html>
+
+      <div class="container">
+        <div class="jumbotron">
+            <p>
+                {{ doc_content }}
+            </p>
+        </div>
+      </div>
+</body>
+{% endblock content %}

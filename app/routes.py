@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main_page():
-    return "Let's detect some plag"
+    return render_template('index.html')
 
 @app.route('/<docname>')
 def single_doc(docname):
@@ -20,6 +20,16 @@ def single_doc(docname):
                 doc_content = content)
 
 
+@app.route('/sample/')
+def show_sample():
+    #f = file('static/proposal.txt', 'r')
+    f = file('static/training_sample.txt', 'r')
+    content = f.read().decode('utf8')
+    f.close()
+
+    return render_template('view_doc.html',
+        doc_name = 'Sample',
+        doc_content = content)
 
 if __name__ == '__main__':
     app.run(debug = True)
