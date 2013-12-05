@@ -1,6 +1,16 @@
-*.pyc
+# Based on https://github.com/zachwill/flask_heroku/blob/master/.gitignore
+# Virtualenv stuff
 venv
-bin
+.Python
 include
-*~
+lib
+
+# Python Packages?
+*.egg
+bin
+eggs
+.installed.cfg
+
+# Others
 .DS_STORE
+*.pyc
