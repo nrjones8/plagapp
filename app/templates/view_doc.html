@@ -1,20 +1,47 @@
 {% extends "base.html" %}
 
 {% block further_head %}
+<script src="/static/js/popover.js"></script>
+<script src="/static/js/tooltip.js"></script>
 <script src="/static/js/view_doc.js"></script>
 {% endblock further_head %}
 
 {% block content %}
 <body>
-      <h1>{{doc_name}} - Where's the plag??</h1>
-      <h1>Hello, there!</h1>
+  <div class="container">
+    <h1>Where's the plag??</h1>
+    <div class="jumbotron">
+      <div class="row">
+          <div class="col-md-9">
 
-      <div class="container">
-        <div class="jumbotron">
-            <p>
-                {{ doc_content }}
-            </p>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                Main Text (put title here?)
+              </div>
+              <div class="panel-body">
+                <p>
+                {% for passage in passages %}
+                <div class="passage" id="{{ passage.start_word_index }}" features="{{ passage.features }}" style="font-size:14px;display:inline;">
+                    {{ passage.text.decode('utf8') }}
+                </div>
+                {% endfor %}
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                Passage Details
+              </div>
+              <div class="panel-body" id="feature_box" style="font-size:12px">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+  </div>
 </body>
 {% endblock content %}
