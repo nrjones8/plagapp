@@ -22,9 +22,6 @@ def about():
 
 @app.route('/<docname>')
 def single_doc(docname):
-    # f = file('static/' + docname + '.txt', 'r')
-    # content = f.read().decode('utf8')
-    # f.close()
     content = 'here is some content to display'
 
     return render_template('view_doc.html',
@@ -45,18 +42,13 @@ def show_sample():
     Use a pickled file of passage objects parsed from static/training_sample.txt
     to sample the front-end
     '''
-    
-    passage = Passage('foo', 'sentence', 12, 43, 'herrrro there')
+    passage_pickle = file(os.path.join(APP_ROOT, 'static/passages.dat'), 'rb')
+    all_passages = pickle.load(passage_pickle)
+    passage_pickle.close()
+
     return render_template('view_doc.html',
         doc_name = 'Sample',
-        passages = [passage])
-    # passage_pickle = file(os.path.join(APP_ROOT, 'static/passages.dat'), 'rb')
-    # all_passages = pickle.load(passage_pickle)
-    # passage_pickle.close()
-
-    # return render_template('view_doc.html',
-    #     doc_name = 'Sample',
-    #     passages = all_passages)
+        passages = all_passages)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
