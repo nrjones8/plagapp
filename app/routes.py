@@ -54,9 +54,5 @@ def show_sample():
         passages = all_passages)
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        port = int(sys.argv[1])
-    else:
-        port = 5000
+    port = int(os.environ.get('PORT', 5000))
     app.run(debug = True, port=port)
-    print
