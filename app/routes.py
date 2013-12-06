@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+import sys
+import os
 
 # NOTE Terribly hacky right now. This should NOT live in plagapp,
 # but should instead be imported from the actual plagcomps repo
@@ -7,6 +9,7 @@ from passage import Passage
 import cPickle as pickle
 
 app = Flask(__name__)
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 @app.route('/index/')
 @app.route('/')
@@ -42,7 +45,7 @@ def show_sample():
     Use a pickled file of passage objects parsed from static/training_sample.txt
     to sample the front-end
     '''
-    passage_pickle = file('static/passages.dat', 'rb')
+    passage_pickle = file(os.path.join(APP_ROOT, 'static/passages.dat'), 'rb')
     all_passages = pickle.load(passage_pickle)
     passage_pickle.close()
 
@@ -51,5 +54,9 @@ def show_sample():
         passages = all_passages)
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    if len(sys.argv) == 2:
+        port = int(sys.argv[1])
+    else:
+        port = 5000
+    app.run(debug = True, port=port)
     print
