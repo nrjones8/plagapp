@@ -11,6 +11,32 @@
   <div class="container">
     <h1>Where's the plag??</h1>
     <div class="jumbotron">
+      <div class="row" id="full_table">
+        <div class="col-md-9">
+          <div class="table-responsive" style="font-size:12px;">
+          <table class="table table-condensed table-scrollable table-bordered">
+            <thead>
+              <tr>
+                <th>Start Index</th>
+                {% for feature in features %}
+                  <th>{{ feature }} </th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for passage in passages %}
+                <tr class="passage_starting_at_{{ passage.start_word_index }}">
+                  <td class="passage_row"> {{ passage.start_word_index }} </td>
+                  {% for feature in passage.features %}
+                    <td class="passage_row"> {{ "%.4f"| format(passage.features[feature]) }} </td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        </div>
+      </div>
       <div class="row">
           <div class="col-md-9">
 
@@ -18,10 +44,10 @@
               <div class="panel-heading">
                 Main Text (put title here?)
               </div>
-              <div class="panel-body">
+              <div class="panel-body" id="document_content">
                 <p>
                 {% for passage in passages %}
-                <div class="passage" id="{{ passage.start_word_index }}" features="{{ passage.features }}" style="font-size:14px;display:inline;">
+                <div class="passage" features="{{ passage.to_html() }}" style="font-size:14px;display:inline;">
                     {{ passage.text.decode('utf8') }}
                 </div>
                 {% endfor %}
@@ -32,11 +58,12 @@
           </div>
 
           <div class="col-md-3">
-            <div class="panel panel-default">
+            <div class="panel panel-default" data-spy="affix" id="feature_panel">
               <div class="panel-heading">
                 Passage Details
               </div>
-              <div class="panel-body" id="feature_box" style="font-size:12px">
+              <div class="panel-body" id="feature_box" style="font-size:12px" passage-index="0">
+                  
               </div>
             </div>
           </div>
