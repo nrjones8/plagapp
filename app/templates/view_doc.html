@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block further_head %}
+<link href="/static/css/view_doc.css" rel="stylesheet" media="screen">
 <script src="/static/js/popover.js"></script>
 <script src="/static/js/tooltip.js"></script>
 <script src="/static/js/view_doc.js"></script>
@@ -11,6 +12,7 @@
   <div class="container">
     <h1>Where's the plag??</h1>
     <div class="jumbotron">
+
       <div class="row" id="full_table">
         <div class="col-md-9">
           <div class="table-responsive" style="font-size:12px;">
@@ -37,6 +39,7 @@
         </div>
         </div>
       </div>
+
       <div class="row">
           <div class="col-md-9">
 
@@ -58,11 +61,11 @@
           </div>
 
           <div class="col-md-3">
-            <div class="panel panel-default" data-spy="affix" id="feature_panel">
+            <div class="panel panel-default" data-spy="affix" id="feature_panel" data-offset-top="400" data-offset-bottom="200">
               <div class="panel-heading">
                 Passage Details
               </div>
-              <div class="panel-body" id="feature_box" style="font-size:12px" passage-index="0">
+              <div class="panel-body" id="feature_box" style="font-size:12px">
                   
               </div>
             </div>

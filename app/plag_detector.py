@@ -5,7 +5,7 @@ import cPickle
 
 sys.path.append(app.config['PLAGCOMPS_LOC'])
 
-from plagcomps.controller import Controller
+from plagcomps.intrinsic import get_plagiarism_passages
 
 class PlagDetector:
     '''
@@ -15,26 +15,31 @@ class PlagDetector:
     '''
 
     def get_passages(self, filename=None):
-        if filename is None:
-            filename = os.path.join(app.config['APP_ROOT'], 'static/head_training_sample.txt')
-        elif filename == 'pickle':
-            pickle_file = os.path.join(app.config['APP_ROOT'], 'static/passages.dat')
+        if filename == 'pickle':
+            pickle_file = os.path.join(app.config['APP_ROOT'], 'static/sample_docs/passages.dat')
             f = file(pickle_file, 'rb')
             passages = cPickle.load(f)
             f.close()
-        else:
 
-            c = Controller(filename)
+            return passages
+        elif filename is None:
+            filename = os.path.join(app.config['APP_ROOT'], 'static/sample_docs/head_training_sample.txt')
+    
+        f = file(filename, 'rb')
+        content = f.read()
+        f.close()
 
-            features = [
-                'averageWordLength',
-                'averageSentenceLength',
-                'get_avg_word_frequency_class',
-                'get_punctuation_percentage',
-                'get_stopword_percentage'
-            ]
-            print 'created a controller, runnign the sucker'
-            passages = c.test('paragraph', features, 'kmeans', 2, display_output=True)
+        atom_type = 'paragraph'
+        features = [
+            'average_sentence_length', 
+            'stopword_percentage',
+            'average_word_length',
+            'punctuation_percentage',
+            'syntactic_complexity',
+            'avg_internal_word_freq_class'
+        ]
+        
+        passages = get_plagiarism_passages(content, atom_type, features, 'kmeans', 2)
 
         return passages
 
