@@ -12,8 +12,17 @@
   <div class="container">
     <h1>Where's the plag??</h1>
     <div class="jumbotron">
+        <small>
+            <p>Atom Type: {{ atom_type }} </p>
+            <p>Cluster Method: {{ cluster_method }} </p>
+            <p>k: {{ k }} </p>
+        </small>
 
-      <div class="row" id="full_table">
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#full_table">
+      Hide/Show Table
+      </button>
+
+      <div class="row collapse in" id="full_table">
         <div class="col-md-9">
           <div class="table-responsive" style="font-size:12px;">
           <table class="table table-condensed table-scrollable table-bordered">
@@ -28,7 +37,7 @@
             <tbody>
               {% for passage in passages %}
                 <tr class="passage_starting_at_{{ passage.start_word_index }}">
-                  <td class="passage_row"> {{ passage.start_word_index }} </td>
+                  <td class="passage_row"> {{ passage.char_index_start }} </td>
                   {% for feature in passage.features %}
                     <td class="passage_row"> {{ "%.4f"| format(passage.features[feature]) }} </td>
                   {% endfor %}
@@ -53,6 +62,10 @@
                 <div class="passage" features="{{ passage.to_html() }}" style="font-size:14px;display:inline;">
                     {{ passage.text.decode('utf8') }}
                 </div>
+                {% if atom_type == 'paragraph' %}
+                    <br />
+                {% endif %}
+
                 {% endfor %}
                 </p>
               </div>

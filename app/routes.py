@@ -55,12 +55,13 @@ def view_doc(doc_name):
     cluster_method = request.args.get('cluster_method')
     k = int(request.args.get('k'))
 
-    print 'even got here?'
     all_passages = PlagDetector().get_passages(atom_type, features, cluster_method, k, full_path)
     feature_names = all_passages[0].features.keys()
 
     return render_template('view_doc.html',
-        doc_name = 'some doc',
+        atom_type = atom_type,
+        cluster_method = cluster_method,
+        k = k,
         passages = all_passages,
         features = feature_names)
     
