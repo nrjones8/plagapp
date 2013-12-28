@@ -6,11 +6,36 @@
 <div class="container">
     <h1>Pick your plag</h1>
     <div class="jumbotron">
-        <form method="POST" action="" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            {{ form.file_name }}
-            <input type="submit" value="Go">
-        </form>
+        <dt>
+            <form method="POST" action="" enctype="multipart/form-data" role="form">
+                <div class="form-group">
+                    {{ form.hidden_tag() }}
+                    <dd> {{ form.doc_name.label }} </dd>
+                    <dd> {{ form.doc_name(class='form-control') }} </dd>
+                </div>
+
+                <div class="form-group">
+                    <dd> {{ form.features.label }} </dd>
+                    <dd> {{ form.features(class='form-control') }} </dd>
+
+                    <dd> {{ form.atom.label }} </dd>
+                    <dd> {{ form.atom(class='form-control') }} </dd>
+                </div>
+
+                <div class="form-group">
+                    <dd> {{ form.cluster_method.label }} </dd>
+                    <dd> {{ form.cluster_method(class='form-control') }} </dd>
+
+                    <dd> {{ form.k.label }} </dd>
+                    <dd> {{ form.k(class='form-control') }} </dd>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default"> Go </button>
+                </div>
+                
+            </form>
+        </dt>
     </div>
 </div>
 {% endblock content %}

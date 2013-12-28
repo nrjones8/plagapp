@@ -14,7 +14,7 @@ class PlagDetector:
     has been nicely packaged.
     '''
 
-    def get_passages(self, filename=None):
+    def get_passages(self, atom_type, features, cluster_method, k, filename=None):
         if filename == 'pickle':
             pickle_file = os.path.join(app.config['APP_ROOT'], 'static/sample_docs/passages.dat')
             f = file(pickle_file, 'rb')
@@ -28,18 +28,8 @@ class PlagDetector:
         f = file(filename, 'rb')
         content = f.read()
         f.close()
-
-        atom_type = 'paragraph'
-        features = [
-            'average_sentence_length', 
-            'stopword_percentage',
-            'average_word_length',
-            'punctuation_percentage',
-            'syntactic_complexity',
-            'avg_internal_word_freq_class'
-        ]
         
-        passages = get_plagiarism_passages(content, atom_type, features, 'kmeans', 2)
+        passages = get_plagiarism_passages(content, atom_type, features, cluster_method, k)
 
         return passages
 
