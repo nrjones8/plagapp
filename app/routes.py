@@ -31,7 +31,7 @@ def select_doc():
             form.cluster_method.name : form.cluster_method.data,
             form.k.name : form.k.data
         }
-        print kwargs
+        
         return redirect(url_for('view_doc', **kwargs))
     elif len(form.errors) > 0:
         # TODO Make a nice error msg
@@ -63,7 +63,8 @@ def view_doc(doc_name):
         cluster_method = cluster_method,
         k = k,
         passages = all_passages,
-        features = feature_names)
+        features = feature_names,
+        doc_name = doc_name)
     
 
 @app.route('/sample/')

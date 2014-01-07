@@ -56,7 +56,8 @@ def get_cluster_options():
     options = [
         'kmeans',
         'agglom',
-        'hmm'
+        'hmm',
+        'none'
     ]
 
     return zip(options, options)
