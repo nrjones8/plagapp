@@ -6,6 +6,7 @@ import cPickle
 sys.path.append(app.config['PLAGCOMPS_LOC'])
 
 from plagcomps.intrinsic import get_plagiarism_passages
+from plagcomps.shared import util 
 
 class PlagDetector:
     '''
@@ -30,6 +31,11 @@ class PlagDetector:
         f.close()
         
         passages = get_plagiarism_passages(content, atom_type, features, cluster_method, k)
+
+        return passages
+
+    def get_ground_truth_passages(self, atom_type, file_path, xml_path):
+        passages = util.BaseUtility().get_bare_passages_and_plagiarized_spans(file_path, xml_path, atom_type)
 
         return passages
 

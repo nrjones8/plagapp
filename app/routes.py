@@ -7,7 +7,7 @@ import os
 
 from forms import PlagSelection
 from plag_detector import PlagDetector
-from util import get_file_to_full_paths
+from util import get_file_to_full_paths, get_file_options
 
 @app.route('/index/')
 @app.route('/')
@@ -66,6 +66,24 @@ def view_doc(doc_name):
         features = feature_names,
         doc_name = doc_name)
     
+
+#@app.route('/view_source_doc/<doc_name>', methods=['GET'])
+#def view_source_doc(doc_name):
+@app.route('/test_source_doc')
+def view_source_doc():
+    full_path = os.path.join(app.config['APP_ROOT'], 'static/sample_docs/test2.txt')
+    xml_path = os.path.join(app.config['APP_ROOT'], 'static/sample_docs/test2.xml')
+
+    atom_type = 'paragraph'
+
+    passages = PlagDetector().get_ground_truth_passages(atom_type, full_path, xml_path)
+    
+    return render_template('view_source_doc.html',
+        passages = passages,
+        atom_type = atom_type)
+
+
+
 
 @app.route('/sample/')
 def show_sample():

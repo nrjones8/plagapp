@@ -42,7 +42,10 @@
                   {% for feature in passage.features %}
                     <td class="passage_row"> {{ "%.4f"| format(passage.features[feature]) }} </td>
                   {% endfor %}
-                  <td class="passage_row"> {{ "%.4f"| format(passage.plag_confidence) }} </td>
+
+                  {% if passage.plag_confidence %}
+                    <td class="passage_row"> {{ "%.4f"| format(passage.plag_confidence) }} </td>
+                  {% endif %}
                 </tr>
               {% endfor %}
             </tbody>
