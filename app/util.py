@@ -1,6 +1,11 @@
 from app import app
 import os
 import glob
+import sys
+
+sys.path.append(app.config['PLAGCOMPS_LOC'])
+
+from plagcomps.shared.util import IntrinsicUtility
 
 def get_file_options():
     static_file_loc = os.path.join(app.config['APP_ROOT'], 'static/sample_docs')
@@ -16,7 +21,23 @@ def get_file_options():
     full_paths = [os.path.join(static_file_loc, f) for f in local_file_options] + \
                  [os.path.join(sample_corpus_loc, f) for f in sample_corpus_options]
 
+    # If on the comps machine, also grab the full training set of corpus
+    training_rel_paths, training_full_paths = get_training_set_files()
+    without_extensions += training_rel_paths
+    full_paths += training_full_paths
+
     return full_paths, without_extensions
+
+
+def get_training_set_files():
+    util = IntrinsicUtility()
+    full_paths = util.get_n_training_files()
+    relative_paths = util.get_relative_training_set(IntrinsicUtility.TRAINING_LOC)
+    # Strip leading '/' and remove '/'s to prepare for URL
+    relative_paths = [r[1:].replace('/', '-') for r in relative_paths]
+
+    return relative_paths, full_paths
+
 
 def get_file_short_names():
     full_paths, file_names = get_file_options()
