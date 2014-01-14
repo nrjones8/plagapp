@@ -24,13 +24,21 @@ class PlagDetector:
 
             return passages
         elif filename is None:
-            filename = os.path.join(app.config['APP_ROOT'], 'static/sample_docs/head_training_sample.txt')
-    
+            filename = os.path.join(app.config['APP_ROOT'], 'static/sample_docs/head_training_sample.txt')        
+
+        
+        u = util.IntrinsicUtility()
         f = file(filename, 'rb')
         content = f.read()
         f.close()
         
         passages = get_plagiarism_passages(content, atom_type, features, cluster_method, k)
+
+        # Look for a corresponding XML file and add ground truth if one exists
+        xml_path = filename.replace('.txt', '.xml')
+        if os.path.exists(xml_path):
+            u.add_ground_truth_to_passages(passages, xml_path)
+    
 
         return passages
 

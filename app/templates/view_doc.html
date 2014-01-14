@@ -33,6 +33,7 @@
                   <th>{{ feature }} </th>
                 {% endfor %}
                 <th>Plag. Conf.</th>
+                <th>Plag. Span</th>
               </tr>
             </thead>
             <tbody>
@@ -45,6 +46,12 @@
 
                   {% if passage.plag_confidence %}
                     <td class="passage_row"> {{ "%.4f"| format(passage.plag_confidence) }} </td>
+                  {% endif %}
+
+                  {% if passage.plag_spans|length > 0 %}
+                    <td class="passage_row"> {{ "(%i, %i)"| format(passage.plag_spans[0][0], passage.plag_spans[0][1]) }} </td>
+                  {% else %}
+                    <td class="passage_row"></td>
                   {% endif %}
                 </tr>
               {% endfor %}
@@ -65,7 +72,7 @@
                 <p>
                 {% for passage in passages %}
                 <div class="passage" features="{{ passage.to_html() }}" style="font-size:14px;display:inline;">
-                    {{ passage.text.decode('utf8') }}
+                    {{ passage.format_text_with_underlines().decode('utf8')|safe }}
                 </div>
                 {% if atom_type == 'paragraph' %}
                     <br />
